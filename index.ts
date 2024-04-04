@@ -1,8 +1,12 @@
-import { StateCreator } from 'zustand';
+import { State, StateCreator, StoreMutatorIdentifier } from 'zustand'
 
-export default function zustyMiddleware<T extends object>(
-  createFunction: StateCreator<T>
-): StateCreator<T> {
+export default function zustyMiddleware<
+  T extends State,
+  Mps extends [StoreMutatorIdentifier, unknown][] = [],
+  Mcs extends [StoreMutatorIdentifier, unknown][] = [],
+>(
+  createFunction: StateCreator<T, Mps, Mcs>
+): StateCreator<T, Mps, Mcs> {
   return (set, get, api) => {
     const store = createFunction(set, get, api);
 
